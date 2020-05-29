@@ -1,0 +1,36 @@
+﻿@inject CurrencyDataStore DataStore
+@inject IStringLocalizer<DataStoreStatusDisplay> Localizer
+@implements IDisposable
+
+<div class="datastore-status @StaleClass">
+    @if (DataStore.IsLoading)
+    {
+        <span>
+            @Localizer["Updating..."]
+        </span>
+    }
+    else if (DataStore.LastUpdatedDate.HasValue)
+    {
+        <span>
+            @Localizer["Data updated"]: @DataStore.LastUpdatedDate.Value.ToShortDateString()
+        </span>
+    }
+</div>
+
+@code {
+    TimeSpan? TimeSinceLoaded => DataStore.LastUpdatedDate.HasValue
+        ? DateTime.Now.Subtract(DataStore.LastUpdatedDate.Value)
+        : (TimeSpan?)null;
+
+    string StaleClass => DataStore.IsStale ? "stale-data" : string.Empty;
+
+    protected override void OnInitialized()
+    {
+        DataStore.LoadingStatusChanged += StateHasChanged;
+    }
+
+    void IDisposable.Dispose()
+    {
+        DataStore.LoadingStatusChanged -= StateHasChanged;
+    }
+}

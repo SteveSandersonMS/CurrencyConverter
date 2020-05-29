@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Currency Converter</title>
+    <base href="/" />
+    <link href="css/site.css" rel="stylesheet" />
+    <link href="manifest.json" rel="manifest" />
+    <link href="icon-512.png" rel="apple-touch-icon" sizes="512x512" />
+    <link href="data:," rel="icon" />
+</head>
+
+<body ontouchstart="">
+    <app><div class="lds-dual-ring"></div></app>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <script>window.SharedArrayBuffer = function() {};</script>
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="register-service-worker.js"></script>
+    <script>
+        function ensureCurrencyRowVisible(code) {
+            document.querySelector(`.currency-${code}`).scrollIntoViewIfNeeded();
+        }
+    </script>
+</body>
+
+</html>

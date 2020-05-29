@@ -1,0 +1,93 @@
+﻿@inject CurrencyDataStore DataStore
+@inject IJSRuntime JS
+
+<DataStoreStatusDisplay />
+
+<div class="currencies">
+    <ul>
+        @foreach (var rate in DataStore.ExchangeRates)
+        {
+            <li class="@(rate.Currency.Code == selectedCurrency ? "selected" : "") currency-@rate.Currency.Code" @onclick="() => SelectCurrency(rate)">
+                <img class="flag" src="flags/@rate.Currency.Flag" />
+                <span class="name">@rate.Currency.Code</span>
+                <span class="value">
+                    <span>@rate.Currency.Sign</span>
+                    @FormatConvertedValue(rate)
+                </span>
+            </li>
+        }
+    </ul>
+</div>
+
+<Keypad Visible="selectedCurrency != null" OnDigit="HandleDigitKey" OnSpecialKey="HandleSpecialKey" />
+<PwaUpdateNotice />
+
+@code {
+    bool scrollToSelectedRate;
+    string selectedCurrency;
+    string textTyped;
+    decimal numberTyped;
+
+    protected override void OnInitialized()
+    {
+        DataStore.LoadingStatusChanged += StateHasChanged;
+    }
+
+    void SelectCurrency(ExchangeRate rate)
+    {
+        selectedCurrency = rate.Currency.Code;
+        scrollToSelectedRate = true;
+        textTyped = string.Empty;
+        numberTyped = 0;
+    }
+
+    void HandleDigitKey(int digit)
+    {
+        textTyped += digit;
+        decimal.TryParse(textTyped, out numberTyped);
+    }
+
+    async Task HandleSpecialKey(Keypad.SpecialKey key)
+    {
+        switch (key)
+        {
+            case Keypad.SpecialKey.Clear:
+                textTyped = string.Empty;
+                numberTyped = 0;
+                break;
+            case Keypad.SpecialKey.Dot:
+                if (!textTyped.Contains(Keypad.DotChar))
+                {
+                    textTyped += Keypad.DotChar;
+                }
+                break;
+            case Keypad.SpecialKey.Refresh:
+                try
+                {
+                    await DataStore.Refresh();
+                }
+                catch (Exception ex)
+                {
+                    await JS.InvokeVoidAsync("alert", "Loading failed. Check your network connection.\n\nError: " + ex.Message);
+                }
+                break;
+        }
+    }
+
+    string FormatConvertedValue(ExchangeRate rate)
+    {
+        var convertedNumber = selectedCurrency != null && DataStore.ExchangeRatesLookup.TryGetValue(selectedCurrency, out var selectedRate)
+            ? numberTyped * rate.ValueInEUR / selectedRate.ValueInEUR
+            : 0;
+        return convertedNumber == 0 ? "0" : convertedNumber.ToString("N2");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (scrollToSelectedRate)
+        {
+            scrollToSelectedRate = false;
+            await JS.InvokeVoidAsync("ensureCurrencyRowVisible", selectedCurrency);
+        }
+    }
+}

@@ -1,0 +1,257 @@
+﻿.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #171717;
+    touch-action: none;
+    overflow: hidden;
+}
+
+app {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.currencies {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.keypad {
+    background-color: #363535;
+    box-shadow: 0 -20px 30px rgba(0, 0, 0, 1);
+    z-index: 1;
+    display: none;
+}
+
+    .keypad.visible {
+        display: block;
+        animation: slide-up-fade-in cubic-bezier(.17,.67,.08,1.03) 0.5s;
+    }
+
+.keypad-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0.2rem;
+    padding: 0.75rem 1rem 1.5rem 1rem;
+    max-width: 25rem;
+    margin: auto;
+}
+
+.keypad button {
+    font-size: 2rem;
+    padding: 0.4rem;
+    background: #5d5c5c;
+    border: none;
+    border-radius: 0.3rem;
+    color: white;
+    overflow: hidden;
+}
+
+    .keypad button:active {
+        background: #aaa;
+    }
+
+    .keypad button:focus {
+        outline: none;
+    }
+
+.keypad-buttons button.special {
+    background: #115780;
+}
+
+.keypad-buttons .refresh {
+    background: none;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: #aaa;
+}
+
+.currencies ul {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 0.25rem;
+    padding: 0.5rem;
+    list-style-type: none;
+    padding: 0;
+    margin: 4px 0 3rem 0;
+}
+
+.currencies li {
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    margin-top: 4px;
+    height: 2.5rem;
+}
+
+    .currencies li .flag {
+        padding-right: 0.8rem;
+        width: 3.75rem;
+    }
+
+    .currencies li .name {
+        width: 2rem;
+        text-align: center;
+        font-size: 1.2rem;
+        color: #ccc;
+    }
+
+    .currencies li .value {
+        flex-grow: 1;
+        text-align: right;
+        padding-right: 0.5rem;
+        font-variant-numeric: tabular-nums;
+        font-size: 1.3rem;
+    }
+
+        .currencies li .value > span {
+            color: #888;
+            padding-right: 0.5rem;
+        }
+
+    .currencies li.selected {
+        background: #115780;
+    }
+
+.datastore-status {
+    background-color: #0d4261;
+    color: rgba(255,255,255,0.8);
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+    .datastore-status.stale-data {
+        background-color: red;
+    }
+
+.lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    margin: auto;
+    transform: translate(-5px, -5px);
+}
+
+    .lds-dual-ring:after {
+        content: " ";
+        display: block;
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+        border-radius: 50%;
+        border: 6px solid #fff;
+        border-color: #239be1 transparent #239be1 transparent;
+        animation: lds-dual-ring 1.2s linear infinite;
+    }
+
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes slide-up-fade-in {
+    0% {
+        opacity: 0;
+        transform: translate(0px, 200px);
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0px,0px);
+    }
+}
+
+body:not(.pwa-ready) .pwa-ready-notice {
+    display: none;
+}
+
+.pwa-ready-notice {
+    position: absolute;
+    background: #0a5782;
+    padding: 1rem 1.5rem;
+    bottom: 2rem;
+    width: 100%;
+    box-shadow: 0 0px 5px rgba(0,0,0,1);
+    text-align: center;
+    color: white;
+    animation: small-slide-up-fade-in ease-out 0.6s;
+    z-index: 2;
+}
+
+    .pwa-ready-notice h1 {
+        font-size: 1.2rem;
+        font-weight: normal;
+        padding: 0;
+        margin: 0.5rem 2rem 1rem 2rem;
+    }
+
+    .pwa-ready-notice button {
+        font-size: 1.2rem;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        border: none;
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    @keyframes small-slide-up-fade-in {
+        0% {
+        opacity: 0;
+        transform: translate(0px, 30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0px, 0px);
+    }
+}

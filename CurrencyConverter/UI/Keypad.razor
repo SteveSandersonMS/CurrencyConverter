@@ -1,0 +1,40 @@
+﻿@using System.Globalization
+@inject IStringLocalizer<Keypad> Localizer
+
+<div class="keypad @(Visible ? "visible" : "")">
+    <div class="keypad-buttons">
+        <button class="refresh" @onclick="@(() => OnSpecialKey.InvokeAsync(SpecialKey.Refresh))">@Localizer["Refresh"]</button>
+        <span></span>
+        <button class="special clear" @onclick="@(() => OnSpecialKey.InvokeAsync(SpecialKey.Clear))">@Localizer["C"]</button>
+
+        <button @onclick="@(() => OnDigit.InvokeAsync(7))">7</button>
+        <button @onclick="@(() => OnDigit.InvokeAsync(8))">8</button>
+        <button @onclick="@(() => OnDigit.InvokeAsync(9))">9</button>
+
+        <button @onclick="@(() => OnDigit.InvokeAsync(4))">4</button>
+        <button @onclick="@(() => OnDigit.InvokeAsync(5))">5</button>
+        <button @onclick="@(() => OnDigit.InvokeAsync(6))">6</button>
+
+        <button @onclick="@(() => OnDigit.InvokeAsync(1))">1</button>
+        <button @onclick="@(() => OnDigit.InvokeAsync(2))">2</button>
+        <button @onclick="@(() => OnDigit.InvokeAsync(3))">3</button>
+
+        <button @onclick="@(() => OnDigit.InvokeAsync(0))" style="grid-column: 1 / 3">0</button>
+        <button @onclick="@(() => OnSpecialKey.InvokeAsync(SpecialKey.Dot))">@DotChar</button>
+    </div>
+</div>
+
+@code {
+    public static readonly string DotChar = CultureInfo.CurrentUICulture.NumberFormat.CurrencyDecimalSeparator;
+
+    [Parameter] public bool Visible { get; set; }
+    [Parameter] public EventCallback<int> OnDigit { get; set; }
+    [Parameter] public EventCallback<SpecialKey> OnSpecialKey { get; set; }
+
+    public enum SpecialKey
+    {
+        Dot,
+        Refresh,
+        Clear,
+    }
+}

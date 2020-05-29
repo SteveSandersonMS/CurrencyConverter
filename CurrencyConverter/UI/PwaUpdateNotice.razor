@@ -1,0 +1,17 @@
+﻿@inject IJSRuntime JS
+
+<div class="pwa-ready-notice">
+    <h1>A new version of this app is available</h1>
+    <button @onclick="TriggerUpdate" disabled="@updating">
+        @(updating ? "Updating" : "Update")
+    </button>
+</div>
+
+@code {
+    bool updating;
+    async Task TriggerUpdate()
+    {
+        updating = true;
+        await JS.InvokeVoidAsync("triggerUpdate");
+    }
+}
