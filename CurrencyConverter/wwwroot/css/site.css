@@ -112,7 +112,7 @@ app {
     padding: 0.5rem;
     list-style-type: none;
     padding: 0;
-    margin: 4px 0 3rem 0;
+    margin: 4px 0 4px 0;
 }
 
 .currencies li {
@@ -153,6 +153,18 @@ app {
     .currencies li.selected {
         background: #115780;
     }
+
+    .currencies .source-code {
+        margin: 1rem 0 3rem 0;
+        padding: 0 1rem;
+    }
+
+        .currencies .source-code a {
+            text-decoration: none;
+            color: #4776d0;
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
 
 .datastore-status {
     background-color: #0d4261;

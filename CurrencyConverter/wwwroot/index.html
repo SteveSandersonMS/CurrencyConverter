@@ -30,10 +30,11 @@
     <script src="_framework/blazor.webassembly.js" autostart="false"></script>
     <script src="register-service-worker.js"></script>
     <script>
+        // Workaround for serving compressed content from GitHub Pages
+        // For framework resources, use the precompressed .br files for faster downloads
+        // This is needed only because GitHub pages doesn't natively support Brotli (or even gzip for .dll files)
         Blazor.start({
             loadBootResource: function (type, name, defaultUri, integrity) {
-                // For framework resources, use the precompressed .br files for faster downloads
-                // This is needed only because GitHub pages doesn't natively support Brotli (or even gzip for .dll files)
                 if (type !== 'dotnetjs' && location.hostname !== 'localhost') {
                     return (async function () {
                         const response = await fetch(defaultUri + '.br', { cache: 'no-cache' });
