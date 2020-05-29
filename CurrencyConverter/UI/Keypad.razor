@@ -1,11 +1,11 @@
 ﻿@using System.Globalization
-@inject IStringLocalizer<Keypad> Localizer
+@inject IStringLocalizer<Keypad> Localize
 
 <div class="keypad @(Visible ? "visible" : "")">
     <div class="keypad-buttons">
-        <button class="refresh" @onclick="@(() => OnSpecialKey.InvokeAsync(SpecialKey.Refresh))">@Localizer["Refresh"]</button>
+        <button class="refresh" @onclick="@(() => OnSpecialKey.InvokeAsync(SpecialKey.Refresh))">@Localize["Refresh"]</button>
         <span></span>
-        <button class="special clear" @onclick="@(() => OnSpecialKey.InvokeAsync(SpecialKey.Clear))">@Localizer["C"]</button>
+        <button class="special clear" @onclick="@(() => OnSpecialKey.InvokeAsync(SpecialKey.Clear))">@Localize["C"]</button>
 
         <button @onclick="@(() => OnDigit.InvokeAsync(7))">7</button>
         <button @onclick="@(() => OnDigit.InvokeAsync(8))">8</button>

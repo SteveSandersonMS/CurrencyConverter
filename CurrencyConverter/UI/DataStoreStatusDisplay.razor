@@ -1,18 +1,18 @@
 ﻿@inject CurrencyDataStore DataStore
-@inject IStringLocalizer<DataStoreStatusDisplay> Localizer
+@inject IStringLocalizer<DataStoreStatusDisplay> Localize
 @implements IDisposable
 
 <div class="datastore-status @StaleClass">
     @if (DataStore.IsLoading)
     {
         <span>
-            @Localizer["Updating..."]
+            @Localize["Updating..."]
         </span>
     }
     else if (DataStore.LastUpdatedDate.HasValue)
     {
         <span>
-            @Localizer["Data updated"]: @DataStore.LastUpdatedDate.Value.ToShortDateString()
+            @Localize["Data updated"]: @DataStore.LastUpdatedDate.Value.ToShortDateString()
         </span>
     }
 </div>
