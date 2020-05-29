@@ -21,13 +21,11 @@ namespace CurrencyConverter.Data
             new Currency { Code = "USD", Flag = "US.png", Sign = "$" },
             new Currency { Code = "GBP", Flag = "GB.png", Sign = "£" },
             new Currency { Code = "CNY", Flag = "CN.png", Sign = "¥" },
-            /*
             new Currency { Code = "JPY", Flag = "JP.png", Sign = "¥" },
             new Currency { Code = "CAD", Flag = "CA.png", Sign = "$" },
             new Currency { Code = "BRL", Flag = "BR.png", Sign = "R$" },
             new Currency { Code = "SEK", Flag = "SE.png", Sign = "kr" },
             new Currency { Code = "INR", Flag = "IN.png", Sign = "₹" },
-            */
         };
 
         public CurrencyDataStore(HttpClient httpClient, IJSRuntime js, IConfiguration config)
