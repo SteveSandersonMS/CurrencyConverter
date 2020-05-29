@@ -1,5 +1,6 @@
 name: DeployToGitHubPages
 env:
+  SOURCE_DIR: CurrencyConverter
   PUBLISH_DIR: CurrencyConverter/bin/Release/netstandard2.1/publish/wwwroot
 
 # Controls when the action will run
@@ -13,14 +14,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Publish app
-      run: dotnet publish -c Release
-
     - name: Rewrite base href
       uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
       with:
-        html_path: ${{ env.PUBLISH_DIR }}/index.html
+        html_path: ${{ env.SOURCE_DIR }}/wwwroot/index.html
         base_href: /CurrencyConverter/
+
+    - name: Publish app
+      run: dotnet publish -c Release
 
     - name: GitHub Pages
       if: success()
