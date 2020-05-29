@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Currency Converter</title>
+    <base href="/CurrencyConverter/" />
+    <link href="css/site.css" rel="stylesheet" />
+    <link href="manifest.json" rel="manifest" />
+    <link href="icon-512.png" rel="apple-touch-icon" sizes="512x512" />
+    <link href="data:," rel="icon" />
+</head>
+
+<body ontouchstart="">
+    <app><div class="lds-dual-ring"></div></app>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <script>
+        function ensureCurrencyRowVisible(code) {
+            document.querySelector(`.currency-${code}`).scrollIntoViewIfNeeded();
+        }
+    </script>
+    <script src="decode.js"></script>
+    <script src="_framework/blazor.webassembly.js" autostart="false"></script>
+    <script src="register-service-worker.js"></script>
+    <script>
+        // Workaround for serving compressed content from GitHub Pages
+        // For framework resources, use the precompressed .br files for faster downloads
+        // This is needed only because GitHub pages doesn't natively support Brotli (or even gzip for .dll files)
+        Blazor.start({
+            loadBootResource: function (type, name, defaultUri, integrity) {
+                if (type !== 'dotnetjs' && location.hostname !== 'localhost') {
+                    return (async function () {
+                        const response = await fetch(defaultUri + '.br', { cache: 'no-cache' });
+                        if (!response.ok) {
+                            throw new Error(response.statusText);
+                        }
+                        const originalResponseBuffer = await response.arrayBuffer();
+                        const originalResponseArray = new Int8Array(originalResponseBuffer);
+                        const decompressedResponseArray = BrotliDecode(originalResponseArray);
+                        const contentType = type === 'dotnetwasm' ? 'application/wasm' : 'application/octet-stream';
+                        return new Response(decompressedResponseArray, { headers: { 'content-type': contentType } });
+                    })();
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

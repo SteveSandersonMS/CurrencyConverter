@@ -1,0 +1,2 @@
+﻿Flag images from https://github.com/googlefonts/noto-emoji/tree/master/third_party/region-flags
+Used under license Apache/2.0 (https://github.com/googlefonts/noto-emoji/blob/master/LICENSE)
